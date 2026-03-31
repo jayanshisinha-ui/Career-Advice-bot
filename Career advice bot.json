@@ -1,0 +1,281 @@
+{
+  "name": "Career advice bot",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Hello 👋  \nI'm your Career Advice Assistant 🎓  \n\nAsk me about:\n• Careers  \n• Skills  \n• Education  \n• Career FAQs  \n\nWhat would you like to know today?",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -480,
+        -48
+      ],
+      "id": "4525644e-7e51-4bfd-9621-66fbab8e6199",
+      "name": "When chat message received",
+      "webhookId": "15a197ef-db1c-412e-b4a4-9d6118689277"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a Career Advice Chatbot.\n\nYour role is to help users with career-related questions using the Career Advice and FAQ data provided.\n\nFollow these rules strictly:\n\n1. LANGUAGE MATCHING\n- Always reply in the same language as the user.\n- If the user writes in Hindi, reply in Hindi.\n- If the user writes in English, reply in English.\n- Do not switch languages unless the user changes language.\n\n2. ANSWER SOURCE RULE\n- Only answer using the Career Advice and FAQ data available.\n- Do not make up answers.\n- Do not give unrelated information.\n- Keep answers short, clear, and helpful.\n\n3. IF QUESTION MATCHES CAREER ADVICE\nProvide:\n- Career Name\n- Required Education\n- Key Skills\n- Short Description\n- Optional salary or future scope if available\n\n4. IF QUESTION MATCHES FAQ\nProvide:\n- A direct and simple answer.\n- Do not give long explanations.\n\n5. IF QUESTION DOES NOT MATCH ANY DATA\nReply with:\n\n\"Sorry, I don't have information about that yet. \nPlease provide your contact number so our team can assist you.\"\n\nThen:\n- Ask politely for the user's phone number.\n- Store this question as an unanswered query if possible.\n\n6. GREETING HANDLING\nIf user says:\n- Hello\n- Hi\n- Hey\n\nReply with:\n\n\"Hello 👋  \nI am your Career Advice Assistant.  \nYou can ask me about careers, education, or skills.\"\n\n7. GOODBYE HANDLING\nIf user says:\n- Bye\n- Thank you\n\nReply with:\n\n\"You're welcome 😊  \nFeel free to ask anytime!\"\n\n8. MULTIPLE CAREERS REQUEST\nIf user asks:\n\"Suggest careers\"\nor\n\"Give career options\"\n\nReply with:\n- Provide 3 to 5 career suggestions.\n\n9. CAREER GUIDANCE MODE\nIf user asks:\n\"What career is good for me?\"\nor\n\"I am confused about career\"\n\nAsk:\n\n- What subjects do you like?\n- What skills do you enjoy?\n- Are you interested in Technology, Arts, Commerce, or Science?\n\nThen suggest careers based on their answers.\n\n10. BEHAVIOR RULES\n- Be polite and professional.\n- Do not give harmful or illegal advice.\n- Do not answer personal questions.\n- Do not give medical or legal advice.\n- Do not provide fake information.\n\n11. RESPONSE STYLE\nAlways:\n- Use simple sentences.\n- Avoid long paragraphs.\n- Use bullet points when listing careers.\n- Keep answers under 6 lines.\n\n12. FALLBACK RESPONSE\nIf unsure, always reply:\n\n\"Sorry, I couldn't find that information.  \nPlease share your contact number so we can help you.\"pful assistant"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -224,
+        -48
+      ],
+      "id": "82271a12-734d-44fd-9f93-10610a366388",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -368,
+        160
+      ],
+      "id": "7034d26e-ec7b-4d5a-ad57-7891e81162f0",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "KgWr21yfK6i9AHKI",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 15
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -224,
+        160
+      ],
+      "id": "5ffa473b-0ed3-49a5-ae56-deec666afc60",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1CHMlt4OD_ZBSPR_rZUDKUDqHla95x5y_bJUvwvxkLbk",
+          "mode": "list",
+          "cachedResultName": "Career Advice bot",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1CHMlt4OD_ZBSPR_rZUDKUDqHla95x5y_bJUvwvxkLbk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 512039497,
+          "mode": "list",
+          "cachedResultName": "FAQ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1CHMlt4OD_ZBSPR_rZUDKUDqHla95x5y_bJUvwvxkLbk/edit#gid=512039497"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        16,
+        144
+      ],
+      "id": "81ddd00e-763d-4f28-b681-adfddd825dc2",
+      "name": "FAQ information",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "qOV3MjkhDpTNBfjl",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1CHMlt4OD_ZBSPR_rZUDKUDqHla95x5y_bJUvwvxkLbk",
+          "mode": "list",
+          "cachedResultName": "Career Advice bot",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1CHMlt4OD_ZBSPR_rZUDKUDqHla95x5y_bJUvwvxkLbk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "career options ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1CHMlt4OD_ZBSPR_rZUDKUDqHla95x5y_bJUvwvxkLbk/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        -80,
+        160
+      ],
+      "id": "db9421d0-69e2-456d-8cf4-07f777f532b8",
+      "name": "Career information",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "qOV3MjkhDpTNBfjl",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1CHMlt4OD_ZBSPR_rZUDKUDqHla95x5y_bJUvwvxkLbk",
+          "mode": "list",
+          "cachedResultName": "Career Advice bot",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1CHMlt4OD_ZBSPR_rZUDKUDqHla95x5y_bJUvwvxkLbk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 692305106,
+          "mode": "list",
+          "cachedResultName": "Unanswered Queries",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1CHMlt4OD_ZBSPR_rZUDKUDqHla95x5y_bJUvwvxkLbk/edit#gid=692305106"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Questions ": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Questions_', ``, 'string') }}",
+            "Phone number": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Phone_number', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Questions ",
+              "displayName": "Questions ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Phone number",
+              "displayName": "Phone number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        80,
+        64
+      ],
+      "id": "53578619-8f79-4213-99cb-624d1a61c9ce",
+      "name": "Queries",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "qOV3MjkhDpTNBfjl",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FAQ information": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "Career information": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Queries": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "9538ea02-6a13-4ef2-b29f-e6a45535b987",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5b61bb04affbd09f7450c59e7994c00b0f7e2d39ccc9e17ce9d4dc000a9f08f6"
+  },
+  "id": "5lF6dWhQQSwkBX4T",
+  "tags": []
+}
