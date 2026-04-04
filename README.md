@@ -75,9 +75,3 @@ The chatbot follows this workflow:
 
 ---
 
-
-### Step 4 — Activate Workflow
-
-- Click **Publish** in n8n  
-- Open Chat  
-- Test using queries like:
