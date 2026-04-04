@@ -56,7 +56,6 @@ The chatbot follows this workflow:
 
 ---
 
-## 📂 Data Structure
 
 ### 📄 Career Information Sheet
 
@@ -76,35 +75,6 @@ The chatbot follows this workflow:
 
 ---
 
-## 🧪 How to Run This Project
-
-### Step 1 — Import Workflow
-
-- Open **n8n**
-- Click **Import Workflow**
-- Upload the workflow JSON file
-
----
-
-### Step 2 — Configure Credentials
-
-Set up credentials for:
-
-- 🔑 OpenAI API Key  
-- 📄 Google Sheets API  
-
----
-
-### Step 3 — Connect Google Sheets
-
-Add:
-
-- Career Information Sheet  
-- FAQ Information Sheet  
-
-Ensure column names match the required structure.
-
----
 
 ### Step 4 — Activate Workflow
 
